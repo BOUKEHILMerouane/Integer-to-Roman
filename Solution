@@ -1,0 +1,62 @@
+class Solution {
+    public String intToRoman(int num) {
+        int reminder = 0;
+        String Level = "";
+        String Level5 = "";
+        String LevelUP = "";
+        StringBuilder strBuilder = new StringBuilder("");
+        while (num != 0) {
+            if (1000 <= num) {
+                reminder = num / 1000;
+                num %= 1000;
+                Level = "M";
+                Level5 = "M";
+                LevelUP = "";
+            } else if (100 <= num) {
+                reminder = num / 100;
+                num %= 100;
+                Level = "C";
+                Level5 = "D";
+                LevelUP = "M";
+            } else if (10 <= num) {
+                reminder = num / 10;
+                num %= 10;
+                Level = "X";
+                Level5 = "L";
+                LevelUP = "C";
+            } else if (1 <= num) {
+                reminder = num / 1;
+                num %= 1;
+                Level = "I";
+                Level5 = "V";
+                LevelUP = "X";
+            }
+            strBuilder.append(getRoman(reminder, Level, Level5, LevelUP));
+        }
+        return strBuilder.toString();
+    }
+
+    private String getRoman(int reminder, String Level, String Level5, String LevelUP) {
+        StringBuilder subBuilder = new StringBuilder("");
+
+        if (reminder == 9) {
+            subBuilder.append(Level);
+            subBuilder.append(LevelUP);
+        } else if (reminder == 4) {
+            subBuilder.append(Level);
+            subBuilder.append(Level5);
+        } else {
+            while (reminder != 0) {
+                if (5 <= reminder) {
+                    subBuilder.append(Level5);
+                    reminder -= 5;
+                } else {
+                    subBuilder.append(Level);
+                    reminder -= 1;
+                }
+            }
+        }
+        return subBuilder.toString();
+    }
+
+}
